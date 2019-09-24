@@ -4,14 +4,13 @@ class App extends Component {
   render() {
     return (
       <box
-        label="react-blessed demo"
+        label="react-blessed aria2"
         border={{ type: "line" }}
         style={{ border: { fg: "cyan" } }}
       >
         <InnerBox position="left" />
         <InnerBox position="right" />
         <ProgressBar />
-        Random text here...
       </box>
     );
   }
