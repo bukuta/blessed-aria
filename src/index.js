@@ -1,12 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import blessed from "blessed";
+import { render } from "react-blessed";
+import App from "./App";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const screen = blessed.screen({
+  autoPadding: true,
+  smartCSR: true,
+  title: "react-blessed demo app"
+});
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+screen.key(["escape", "q", "C-c"], function(ch, key) {
+  return process.exit(0);
+});
+
+const component = render(<App />, screen);
