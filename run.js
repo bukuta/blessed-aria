@@ -4,4 +4,7 @@ require("@babel/register")({
 
 require("react-blessed/dist/fiber/devtools");
 
+// let child_process = require("child_process");
+// child_process.execSync("clear");
+
 require("./src/index");
