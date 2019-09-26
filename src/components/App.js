@@ -1,20 +1,35 @@
 import React, { Component } from "react";
 import Debug from "../utils";
 import MenuBox from "./Menu";
-import CreateDownload from "./CreateDownload";
+import DownloadList from "./DownloadList";
 
-let debug = Debug("app");
+import aria2 from "../helper";
+
+let debug = Debug("app:home");
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = { showFrom: true, url: "" };
   }
+  componentWillReceiveProps(newProps, oldProps) {
+    debug("willUpdate");
+  }
   render() {
     return (
       <box>
         <MenuBox />
-        <DownloadList />
+        <box
+          label="Download list"
+          left="20%"
+          width="60%"
+          height="80%"
+          top="0"
+          border={{ type: "line" }}
+          style={{ border: { fg: "green" } }}
+        >
+          {this.props.children || "hello"}
+        </box>
         <ExtraInformation />
         {/* <ProgressBar /> */}
         <box
@@ -61,60 +76,6 @@ class App extends Component {
             data={[["item1", "item2"], ["item1.1", "item1.2"]]}
           /> */}
         </box>
-      </box>
-    );
-  }
-}
-
-class DownloadList extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      files: []
-    };
-
-    setInterval(() => {
-      // this.setState({ hey: !this.state.hey });
-    }, 1000);
-  }
-
-  render() {
-    const files = this.state.files;
-    let data = [
-      ["文件名", "大小", "进度", "下载速度", "下载时间", "剩余时间"],
-      ["仓老师.avi", "13.2G", "20%", "400Kb/s", "00:02:00", "02:11:12"],
-      ["仓老师.avi", "13.2G", "20%", "400Kb/s", "00:02:00", "02:11:12"],
-      ["仓老师.avi", "13.2G", "20%", "400Kb/s", "00:02:00", "02:11:12"],
-      ["仓老师.avi", "13.2G", "20%", "400Kb/s", "00:02:00", "02:11:12"],
-      ["仓老师.avi", "13.2G", "20%", "400Kb/s", "00:02:00", "02:11:12"],
-      ["仓老师.avi", "13.2G", "20%", "400Kb/s", "00:02:00", "02:11:12"],
-      ["仓老师.avi", "13.2G", "20%", "400Kb/s", "00:02:00", "02:11:12"]
-    ];
-
-    return (
-      <box
-        label="Download list"
-        left="20%"
-        width="60%"
-        height="80%"
-        top="0"
-        border={{ type: "line" }}
-        style={{ border: { fg: "green" } }}
-      >
-        <table
-          left="0"
-          right="0"
-          top="0"
-          width="100%-2"
-          border="line"
-          style={{
-            border: { fg: "green" },
-            header: { fg: "black", bold: true },
-            cell: { fg: "black" }
-          }}
-          data={data}
-        />
       </box>
     );
   }

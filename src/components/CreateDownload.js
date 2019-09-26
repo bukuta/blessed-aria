@@ -1,17 +1,28 @@
 import React, { Component } from "react";
 import history from "./routerHistory";
-
+import aria2 from "../helper";
 import Debug from "../utils";
-let debug = Debug("app");
+let debug = Debug("app:form");
 
 class CreateDownload extends Component {
   constructor(props) {
     super(props);
     this.state = { url: "" };
     this.submit = data => {
-      debug("value", this.refs.input.value);
+      let url = this.refs.input.value.trim();
+      debug("value", url);
       debug("submit", data);
-      history.push("/home");
+      if (url) {
+        aria2
+          .open()
+          .then(() => aria2.call("addUri", [url], { dir: "~/Downloads" }))
+          .then(guids => {
+            debug("guids:", guids);
+            history.push("/");
+          });
+      } else {
+        history.push("/");
+      }
       this.setState({ url: data });
     };
     this.cancel = () => {
@@ -45,22 +56,30 @@ class CreateDownload extends Component {
           focused
           onSubmit={this.submit}
           border="line"
-          style={{ border: { fg: "red" } }}
+          style={{
+            border: { fg: "green", bg: "white" }
+          }}
         >
-          <box width={30} top="0%" left="0%" height={3} style={{}}>
+          <box width="100%-2" top={1} left={1} height={2}>
             下载链接：
           </box>
           <textbox
             ref="input"
-            left={20}
+            left={1}
+            top={3}
             height={3}
+            width="100%-4"
             mouse
             keys
             inputOnFocus
+            border="line"
             style={{
-              bg: "red"
+              border: {
+                fg: "green"
+              }
             }}
           />
+          <line />
           <button
             keys
             vi

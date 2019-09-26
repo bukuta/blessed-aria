@@ -21,21 +21,28 @@ class MenuBox extends Component {
           icon: " ",
           name: "name1",
           title: "正在下载",
-          action: "",
+          action: "/downloads/activate",
           children: []
         },
         {
           icon: "▸",
           name: "name2",
           title: "正在等待",
-          action: "",
+          action: "/downloads/waiting",
           children: []
         },
         {
-          icon: "▾",
+          icon: "",
           name: "name3",
           title: "已完成",
-          action: "",
+          action: "/downloads/stopped",
+          children: []
+        },
+        {
+          icon: "",
+          name: "name3",
+          title: "配置",
+          action: "/settings",
           children: [
             {
               icon: " ",
@@ -58,7 +65,7 @@ class MenuBox extends Component {
   }
 
   render() {
-    debug(this.state.menus);
+    // debug(this.state.menus);
     let menuItems = this.state.menus.map((item, index) => {
       return (
         <MenuItem
@@ -133,7 +140,7 @@ class MenuItem extends Component {
           })}
         </box>
       );
-      debug("subMehu", subMenuHeight);
+      // debug("subMehu", subMenuHeight);
       return (
         <box
           left={0}

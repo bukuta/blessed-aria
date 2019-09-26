@@ -1,7 +1,6 @@
 var Debug = require("debug");
 const fs = require("fs");
 const path = require("path");
-
 Debug.log = function() {
   let basedir = process.cwd();
   console.log(basedir);

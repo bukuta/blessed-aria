@@ -3,12 +3,13 @@ let debug = Debug("app");
 import React from "react";
 import blessed from "blessed";
 import { render } from "react-blessed";
-import { Router, MemoryRouter, Route, IndexRouter } from "react-router";
+import { Router, MemoryRouter, Route, IndexRoute } from "react-router";
 import App from "./components/App";
 import CreateDownload from "./components/CreateDownload";
 import About from "./components/About";
 
 import history from "./components/routerHistory";
+import DownloadList from "./components/DownloadList";
 
 const screen = blessed.screen({
   autoPadding: true,
@@ -38,14 +39,58 @@ let index = 0;
 
 const component = render(
   <Router history={history}>
-    <Route path="/home" component={App} />
-    <Route path="/" component={CreateDownload} />
-    <Route path="/create" component={CreateDownload} />
-    <Route path="/about" component={About} />
+    <Route path="/" component={App} />
+    <Route
+      path="/downloads/activate"
+      render={props => (
+        <App>
+          <DownloadList {...props} type="activate" />
+        </App>
+      )}
+    />
+    <Route
+      path="/downloads/waiting"
+      render={props => (
+        <App>
+          <DownloadList {...props} type="waiting" />
+        </App>
+      )}
+    />
+    <Route
+      path="/downloads/stopped"
+      render={props => (
+        <App>
+          <DownloadList {...props} type="stopped" />
+        </App>
+      )}
+    />
+    <Route
+      path="/create"
+      render={props => (
+        <App>
+          <CreateDownload {...props} />
+        </App>
+      )}
+    />
+    <Route
+      path="/about"
+      render={props => (
+        <App>
+          <About></About>
+        </App>
+      )}
+    />
   </Router>,
   screen
 );
-// import "./signal";
+
+// const component = render(
+//   <App>
+//     <About />
+//     <DownloadList type="activate" />
+//   </App>,
+//   screen
+// );
 
 // // This is dumb but I don't understand how else to prevent process from exiting.
 // // If it exits, it will get restarted by nodemon, but then hot reloading won't work.
