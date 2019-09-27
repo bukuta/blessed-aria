@@ -48,5 +48,25 @@ let options = {
 
 let aria2 = new Aria2(options);
 // aria2.call('')
+// activate: "tellActive",
+// waiting: "tellWaiting",
+// stopped: "tellStopped"
 
+async function getTasksActive() {
+  await aria2.open();
+  let tasks = await aria2.call("tellActive", 0, 20);
+  return tasks;
+}
+async function getTasksWaiting() {
+  await aria2.open();
+  let tasks = await aria2.call("tellWaiting", 0, 20);
+  return tasks;
+}
+async function getTasksStopped() {
+  await aria2.open();
+  let tasks = await aria2.call("tellStopped", 0, 20);
+  return tasks;
+}
 export default aria2;
+
+export { getTasksActive, getTasksWaiting, getTasksStopped };

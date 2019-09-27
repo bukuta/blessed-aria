@@ -19,36 +19,50 @@ class MenuBox extends Component {
         },
         {
           icon: " ",
-          name: "name1",
+          name: "download-activate",
           title: "正在下载",
           action: "/downloads/activate",
           children: []
         },
         {
           icon: "▸",
-          name: "name2",
+          name: "download-waiting",
           title: "正在等待",
           action: "/downloads/waiting",
           children: []
         },
         {
           icon: "",
-          name: "name3",
+          name: "download-stopped",
           title: "已完成",
           action: "/downloads/stopped",
           children: []
         },
         {
           icon: "",
-          name: "name3",
+          name: "about",
+          title: "关于",
+          action: "/about",
+          children: []
+        },
+        {
+          icon: "",
+          name: "quit",
+          title: "退出",
+          action: "/quit",
+          children: []
+        },
+        {
+          icon: "",
+          name: "settings",
           title: "配置",
           action: "/settings",
           children: [
             {
               icon: " ",
               name: "name1",
-              title: "sub1",
-              action: "",
+              title: "Aria配置",
+              action: "/settings/aria",
               children: []
             },
             {
@@ -105,7 +119,11 @@ class MenuItem extends Component {
   }
   onClick() {
     debug("menuItem.onClick", this.props.action);
-    history.push(this.props.action);
+    if (this.props.action == "/quit") {
+      process.exit(0);
+    } else {
+      history.push(this.props.action);
+    }
   }
   render() {
     let { title, icon, name, action, index, children } = this.props;

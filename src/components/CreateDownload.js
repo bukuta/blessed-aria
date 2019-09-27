@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import history from "./routerHistory";
-import aria2 from "../helper";
+import aria2 from "../services";
 import Debug from "../utils";
 let debug = Debug("app:form");
 

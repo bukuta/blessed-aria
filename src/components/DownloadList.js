@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import _ from "lodash";
 import history from "./routerHistory";
 
-import aria2 from "../helper";
+import aria2 from "../services";
 import Debug from "../utils";
 let debug = Debug("app:downloadlist");
 

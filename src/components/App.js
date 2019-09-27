@@ -3,7 +3,7 @@ import Debug from "../utils";
 import MenuBox from "./Menu";
 import DownloadList from "./DownloadList";
 
-import aria2 from "../helper";
+import { getTasksActive, getTasksWaiting, getTasksStopped } from "../services";
 
 let debug = Debug("app:home");
 
@@ -12,14 +12,23 @@ class App extends Component {
     super(props);
     this.state = { showFrom: true, url: "" };
   }
-  componentWillReceiveProps(newProps, oldProps) {
-    debug("willUpdate");
+  componentDidMount() {
+    getTasksActive().then(tasks => {
+      this.props.updateTasksActive(tasks);
+    });
+    getTasksStopped().then(tasks => {
+      this.props.updateTasksStopped(tasks);
+    });
+    getTasksWaiting().then(tasks => {
+      this.props.updateTasksWaiting(tasks);
+    });
   }
+
   render() {
     return (
       <box>
         <MenuBox />
-        <box
+        <element
           label="Download list"
           left="20%"
           width="60%"
@@ -29,7 +38,7 @@ class App extends Component {
           style={{ border: { fg: "green" } }}
         >
           {this.props.children || "hello"}
-        </box>
+        </element>
         <ExtraInformation />
         {/* <ProgressBar /> */}
         <box
@@ -149,5 +158,43 @@ class ProgressBar extends Component {
     );
   }
 }
+import { connect } from "react-redux";
+import {
+  updateTasksActive,
+  updateTasksWaiting,
+  updateTasksStopped,
+  updateSetting
+} from "../stores";
 
-export default App;
+function mapState(state) {
+  return {
+    activeTasks: state.tasks.active,
+    waitingTasks: state.tasks.waiting,
+    stoppedTasks: state.tasks.stopped,
+    settings: state.settings
+  };
+}
+
+function mapDispatch(dispatch) {
+  return {
+    onUpdateTasksActive: tasks => {
+      dispatch(updateTasksActive(tasks));
+    },
+    onUpdateTasksWaiting: tasks => {
+      dispatch(updateTasksWaiting(tasks));
+    },
+    onUpdateTasksStopped: tasks => {
+      dispatch(updateTasksStopped(tasks));
+    },
+    onUpdateSettings: settings => {
+      dispatch(updateSetting(settings));
+    }
+  };
+}
+
+let AppConainer = connect(
+  mapState,
+  mapDispatch
+)(App);
+
+export default AppConainer;
