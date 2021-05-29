@@ -21,7 +21,7 @@
     "source-map-support": "^0.5.13",
     "webpack": "^4.40.2",
     "webpack-dev-server": "^3.8.1",
-    "ws": "^7.1.2"
+    "ws": "^7.4.6"
   },
   "scripts": {
     "start": "DEBUG=app nodemon run.js -q",
